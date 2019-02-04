@@ -51,7 +51,7 @@ class ConversionViewController: UIViewController, UITextFieldDelegate {
         let existingTextHasDecimalSeperator = textField.text?.range(of: ".")
         let replacementTextHasDecimalSeperator = string.range(of: ".")
         
-        guard CharacterSet(charactersIn: ".0123456789").isSuperset(of: CharacterSet(charactersIn: string)) else {
+        guard CharacterSet(charactersIn: ".0123456789\\b").isSuperset(of: CharacterSet(charactersIn: string)) else {
             return false
         }
         
