@@ -10,11 +10,12 @@ import UIKit
 
 class ConversionViewController: UIViewController, UITextFieldDelegate {
     
+    //format decimals in conversion
     let numberFormatter: NumberFormatter = {
         let nf = NumberFormatter()
         nf.numberStyle = .decimal
-        nf.minimumFractionDigits = 0
-        nf.maximumFractionDigits = 1
+        nf.minimumFractionDigits = 0 //allow whole numbers
+        nf.maximumFractionDigits = 1 //round to the nearest tenth
         return nf
     }()
     
@@ -25,6 +26,7 @@ class ConversionViewController: UIViewController, UITextFieldDelegate {
         }
     }
     
+    //celsius label displays converted value
     func updateCelsiusLabel() {
         if let celsiusValue = celsiusValue {
             celsiusLabel.text =
@@ -34,6 +36,7 @@ class ConversionViewController: UIViewController, UITextFieldDelegate {
         }
     }
     
+    //this is the function that does the conversion
     var celsiusValue: Measurement<UnitTemperature>? {
         if let fahrenheitValue = fahrenheitValue {
             return fahrenheitValue.converted(to: .celsius)
@@ -51,6 +54,7 @@ class ConversionViewController: UIViewController, UITextFieldDelegate {
         let existingTextHasDecimalSeperator = textField.text?.range(of: ".")
         let replacementTextHasDecimalSeperator = string.range(of: ".")
         
+        //only allow 0-9, backspace, and period (A+ LEVEL)
         guard CharacterSet(charactersIn: ".0123456789\\b").isSuperset(of: CharacterSet(charactersIn: string)) else {
             return false
         }
@@ -75,8 +79,9 @@ class ConversionViewController: UIViewController, UITextFieldDelegate {
         textField.resignFirstResponder()
     }
     
+    //initial call when application starts
     override func viewDidLoad() {
         super.viewDidLoad()
-        updateCelsiusLabel()
+        updateCelsiusLabel() //shows default values for fahrenheit and celsius
     }
 }
