@@ -91,12 +91,12 @@ class ConversionViewController: UIViewController, UITextFieldDelegate {
         let hour = NSCalendar.current.component(.hour, from: NSDate() as Date)
         
         switch hour {
-        case 1...6: self.backgroundView.backgroundColor = darkColor
-            break
-        case 7...18: self.backgroundView.backgroundColor = greyColor
-            break
-        case 19...23, 0: self.backgroundView.backgroundColor = darkColor
-            break
+        case 1...6:
+            self.backgroundView.backgroundColor = darkColor
+        case 7...18:
+            self.backgroundView.backgroundColor = greyColor
+        case 19...23, 0:
+            self.backgroundView.backgroundColor = darkColor
         default: self.backgroundView.backgroundColor = greyColor
         }
         
