@@ -79,9 +79,27 @@ class ConversionViewController: UIViewController, UITextFieldDelegate {
         textField.resignFirstResponder()
     }
     
+    @IBOutlet var backgroundView: UIView!
+    
     //initial call when application starts
     override func viewDidLoad() {
         super.viewDidLoad()
+        print("ConversionViewController loaded its view.")
+        
+        let darkColor = UIColor(red: 51/255, green: 52/255, blue: 50/255, alpha: 1.0)
+        let greyColor = UIColor(red: 238/255, green: 240/255, blue: 239/255, alpha: 1.0)
+        let hour = NSCalendar.current.component(.hour, from: NSDate() as Date)
+        
+        switch hour {
+        case 1...6: self.backgroundView.backgroundColor = darkColor
+            break
+        case 7...18: self.backgroundView.backgroundColor = greyColor
+            break
+        case 19...23, 0: self.backgroundView.backgroundColor = darkColor
+            break
+        default: self.backgroundView.backgroundColor = greyColor
+        }
+        
         updateCelsiusLabel() //shows default values for fahrenheit and celsius
     }
 }
