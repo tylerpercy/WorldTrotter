@@ -16,7 +16,7 @@ class MapViewController: UIViewController {
     override func loadView() {
         mapView = MKMapView()
         view = mapView
-       
+        
         let segmentedControl = UISegmentedControl(items: ["Standard", "Hybrid", "Satellite"])
         segmentedControl.backgroundColor = UIColor.white.withAlphaComponent(0.5)
         segmentedControl.selectedSegmentIndex = 0

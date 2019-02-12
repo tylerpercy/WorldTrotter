@@ -86,6 +86,7 @@ class ConversionViewController: UIViewController, UITextFieldDelegate {
         super.viewDidLoad()
         print("ConversionViewController loaded its view.")
         
+        /* Chapter 5 Silver */
         let darkColor = UIColor(red: 51/255, green: 52/255, blue: 50/255, alpha: 1.0)
         let greyColor = UIColor(red: 238/255, green: 240/255, blue: 239/255, alpha: 1.0)
         let hour = NSCalendar.current.component(.hour, from: NSDate() as Date)

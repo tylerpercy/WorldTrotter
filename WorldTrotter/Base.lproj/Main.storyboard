@@ -20,6 +20,22 @@
             </objects>
             <point key="canvasLocation" x="300.5" y="115.5"/>
         </scene>
+        <!--Web-->
+        <scene sceneID="Gkm-xV-SQv">
+            <objects>
+                <viewController title="Web" id="4q4-nU-DHf" customClass="WebViewController" customModule="WorldTrotter" customModuleProvider="target" sceneMemberID="viewController">
+                    <view key="view" contentMode="scaleToFill" id="Fko-BB-DXD">
+                        <rect key="frame" x="0.0" y="0.0" width="375" height="667"/>
+                        <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
+                        <color key="backgroundColor" white="1" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
+                        <viewLayoutGuide key="safeArea" id="fYb-sf-uPT"/>
+                    </view>
+                    <tabBarItem key="tabBarItem" title="Web" image="rsz_safari-128" id="3aH-vO-gXj"/>
+                </viewController>
+                <placeholder placeholderIdentifier="IBFirstResponder" id="K2i-6P-0I5" userLabel="First Responder" sceneMemberID="firstResponder"/>
+            </objects>
+            <point key="canvasLocation" x="906.39999999999998" y="114.69265367316342"/>
+        </scene>
         <!--Convert-->
         <scene sceneID="tne-QT-ifu">
             <objects>
@@ -115,6 +131,7 @@
                     <connections>
                         <segue destination="BYZ-38-t0r" kind="relationship" relationship="viewControllers" id="f1k-wL-asH"/>
                         <segue destination="ur4-lZ-Mdp" kind="relationship" relationship="viewControllers" id="IAP-rx-D5R"/>
+                        <segue destination="4q4-nU-DHf" kind="relationship" relationship="viewControllers" id="kcI-vq-yFI"/>
                     </connections>
                 </tabBarController>
                 <placeholder placeholderIdentifier="IBFirstResponder" id="Nt2-XC-qLT" userLabel="First Responder" sceneMemberID="firstResponder"/>
@@ -125,5 +142,6 @@
     <resources>
         <image name="ConvertIcon" width="48" height="32"/>
         <image name="MapIcon" width="48" height="32"/>
+        <image name="rsz_safari-128" width="32" height="32"/>
     </resources>
 </document>
