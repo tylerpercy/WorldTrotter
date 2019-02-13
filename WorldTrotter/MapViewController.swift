@@ -45,6 +45,12 @@ class MapViewController: UIViewController, MKMapViewDelegate {
         topConstraint.isActive = true
         leadingConstraint.isActive = true
         trailingConstraint.isActive = true
+
+    }
+    
+    override func viewDidLoad() {
+        super.viewDidLoad()
+        print("MapViewController loaded its view.")
         
         //allows the app to use location services
         locationManager.requestWhenInUseAuthorization()
@@ -92,7 +98,7 @@ class MapViewController: UIViewController, MKMapViewDelegate {
         realHomePinView.animatesDrop = true
         
         mapView.addAnnotation(realHomePin)
-    
+        
         //Walt Disney World, FL
         futureTravelPin = MKPointAnnotation()
         futureTravelPin.title = "Interesting spot"
@@ -117,6 +123,20 @@ class MapViewController: UIViewController, MKMapViewDelegate {
         
         view.addSubview(pinButton)
     }
+
+    //Helper function to change between map views
+    @objc func mapTypeChanged(_ segControl: UISegmentedControl) {
+        switch segControl.selectedSegmentIndex {
+        case 0:
+            mapView.mapType = .standard
+        case 1:
+            mapView.mapType = .hybrid
+        case 2:
+            mapView.mapType = .satellite
+        default:
+            break
+        }
+    }
     
     //Helper function to cycle between the 3 pinned locations
     @objc func pinButtonAction(_ sender: UIButton!) {
@@ -133,9 +153,14 @@ class MapViewController: UIViewController, MKMapViewDelegate {
         }
     }
     
-    func setLocation(_ place: MKPointAnnotation!){
+    func mapView(_ mapView: MKMapView, didUpdate userLocation: MKUserLocation) {
+        let zoomedInCurrentLocation = MKCoordinateRegionMakeWithDistance(userLocation.coordinate, 500, 500)
+        mapView.setRegion(zoomedInCurrentLocation, animated: true)
+    }
+    
+    func setLocation(_ place: MKPointAnnotation!) {
         let span = MKCoordinateSpan.init(latitudeDelta: 0.0075, longitudeDelta: 0.0075)
-        if place != nil{
+        if place != nil {
             let region = MKCoordinateRegion.init(center: (place.coordinate), span: span)
             mapView.setRegion(region, animated: true)
         }
@@ -148,25 +173,5 @@ class MapViewController: UIViewController, MKMapViewDelegate {
             let region = MKCoordinateRegion.init(center: (locationManager.location?.coordinate)!, span: span)
             mapView.setRegion(region, animated: true)
         }
-    }
-    
-    //Helper function to change between map views
-    @objc func mapTypeChanged(_ segControl: UISegmentedControl) {
-        switch segControl.selectedSegmentIndex {
-        case 0:
-            mapView.mapType = .standard
-        case 1:
-            mapView.mapType = .hybrid
-        case 2:
-            mapView.mapType = .satellite
-        default:
-            break
-        }
-    }
-    
-    override func viewDidLoad() {
-        super.viewDidLoad()
-        print("MapViewController loaded its view.")
-        
     }
 }
