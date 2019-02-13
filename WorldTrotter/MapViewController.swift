@@ -156,12 +156,6 @@ class MapViewController: UIViewController, MKMapViewDelegate {
         }
     }
     
-    //Helper function to zoom in on the user's location
-    func mapView(_ mapView: MKMapView, didUpdate userLocation: MKUserLocation) {
-        let zoomedInCurrentLocation = MKCoordinateRegionMakeWithDistance(userLocation.coordinate, 500, 500)
-        mapView.setRegion(zoomedInCurrentLocation, animated: true)
-    }
- 
     //Helper function for pinned locations
     func setLocation(_ place: MKPointAnnotation!) {
         let span = MKCoordinateSpan.init(latitudeDelta: 0.0075, longitudeDelta: 0.0075)
@@ -169,6 +163,12 @@ class MapViewController: UIViewController, MKMapViewDelegate {
             let region = MKCoordinateRegion.init(center: (place.coordinate), span: span)
             mapView.setRegion(region, animated: true) //places pinned location on map
         }
+    }
+    
+    //Helper function to zoom in on the user's location
+    func mapView(_ mapView: MKMapView, didUpdate userLocation: MKUserLocation) {
+        let zoomedInCurrentLocation = MKCoordinateRegionMakeWithDistance(userLocation.coordinate, 500, 500)
+        mapView.setRegion(zoomedInCurrentLocation, animated: true)
     }
  
     //Helper function for user location button
