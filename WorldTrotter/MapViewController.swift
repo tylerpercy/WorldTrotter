@@ -52,6 +52,8 @@ class MapViewController: UIViewController, MKMapViewDelegate {
         super.viewDidLoad()
         print("MapViewController loaded its view.")
         
+        /* Chapter 6 Silver */
+        
         //allows the app to use location services
         locationManager.requestWhenInUseAuthorization()
         
@@ -65,7 +67,6 @@ class MapViewController: UIViewController, MKMapViewDelegate {
         geoButton.frame = CGRect(x: 15,y: 100,width: buttonWidth, height: buttonWidth)
         geoButton.layer.cornerRadius = 0.5 * geoButton.bounds.size.width //Radius for corners
         geoButton.layer.borderWidth = 0.25
-        geoButton.layer.borderColor = UIColor.white.cgColor
         geoButton.layer.backgroundColor = UIColor.lightGray.cgColor
         geoButton.setTitle("🏠", for: UIControlState()) //This appears inside the button, I chose to use an icon
         geoButton.setTitleColor(UIColor.darkGray, for: UIControlState())
@@ -73,17 +74,18 @@ class MapViewController: UIViewController, MKMapViewDelegate {
         
         view.addSubview(geoButton)
         
-        /* Pins for Chapter 6 Gold Level */
+        /* Chapter 6 Gold */
         
         //Greece, NY
         homePin = MKPointAnnotation() //Declare MKPointAnnotation object
-        homePin.title = "Born Here"
+        homePin.title = "Born Here" //This displays as a label for the pin on the map
         homePin.coordinate = CLLocationCoordinate2D(latitude: 43.2098, longitude: -77.6931) //places pin on map
         
-        let homePinView = MKPinAnnotationView()
-        homePinView.annotation = homePin
-        homePinView.pinTintColor = UIColor.green
-        homePinView.animatesDrop = true
+        //Customization for the born location pin
+        let bornPinView = MKPinAnnotationView()
+        bornPinView.annotation = homePin
+        bornPinView.pinTintColor = UIColor.green
+        bornPinView.animatesDrop = true
         
         mapView.addAnnotation(homePin)
         
@@ -92,10 +94,11 @@ class MapViewController: UIViewController, MKMapViewDelegate {
         realHomePin.title = "Current Home"
         realHomePin.coordinate = CLLocationCoordinate2D(latitude: 35.7915, longitude: -78.7811)
         
-        let realHomePinView = MKPinAnnotationView()
-        realHomePinView.annotation = realHomePin
-        realHomePinView.pinTintColor = UIColor.blue
-        realHomePinView.animatesDrop = true
+        //Customization for the current home location pin
+        let currentHomePinView = MKPinAnnotationView()
+        currentHomePinView.annotation = realHomePin
+        currentHomePinView.pinTintColor = UIColor.blue
+        currentHomePinView.animatesDrop = true
         
         mapView.addAnnotation(realHomePin)
         
@@ -104,10 +107,11 @@ class MapViewController: UIViewController, MKMapViewDelegate {
         futureTravelPin.title = "Interesting spot"
         futureTravelPin.coordinate = CLLocationCoordinate2D(latitude: 28.3852, longitude: -81.5639)
         
-        let futureTravelPinView = MKPinAnnotationView()
-        futureTravelPinView.pinTintColor = UIColor.green
-        futureTravelPinView.animatesDrop = true
-        futureTravelPinView.annotation = futureTravelPin
+        //Customization for the interesting place pin
+        let interestingSpotPinView = MKPinAnnotationView()
+        interestingSpotPinView.pinTintColor = UIColor.green
+        interestingSpotPinView.animatesDrop = true
+        interestingSpotPinView.annotation = futureTravelPin
         
         mapView.addAnnotation(futureTravelPin)
         
@@ -116,7 +120,6 @@ class MapViewController: UIViewController, MKMapViewDelegate {
         pinButton.frame = CGRect(x: 15,y: 200,width: buttonWidth, height: buttonWidth)
         pinButton.layer.cornerRadius = 0.5 * geoButton.bounds.size.width
         pinButton.layer.borderWidth = 0.25
-        pinButton.layer.borderColor = UIColor.darkGray.cgColor
         pinButton.layer.backgroundColor = UIColor.lightGray.cgColor
         pinButton.setTitle("📌", for: UIControlState())
         pinButton.addTarget(self, action: #selector(MapViewController.pinButtonAction(_:)), for: .touchUpInside)
@@ -153,25 +156,28 @@ class MapViewController: UIViewController, MKMapViewDelegate {
         }
     }
     
+    //Helper function to zoom in on the user's location
     func mapView(_ mapView: MKMapView, didUpdate userLocation: MKUserLocation) {
         let zoomedInCurrentLocation = MKCoordinateRegionMakeWithDistance(userLocation.coordinate, 500, 500)
         mapView.setRegion(zoomedInCurrentLocation, animated: true)
     }
-    
+ 
+    //Helper function for pinned locations
     func setLocation(_ place: MKPointAnnotation!) {
         let span = MKCoordinateSpan.init(latitudeDelta: 0.0075, longitudeDelta: 0.0075)
         if place != nil {
             let region = MKCoordinateRegion.init(center: (place.coordinate), span: span)
-            mapView.setRegion(region, animated: true)
+            mapView.setRegion(region, animated: true) //places pinned location on map
         }
     }
-    
+ 
     //Helper function for user location button
     @objc func geoButtonAction(_ sender: UIButton!) {
         let span = MKCoordinateSpan.init(latitudeDelta: 0.0075, longitudeDelta: 0.0075)
         if locationManager.location != nil {
             let region = MKCoordinateRegion.init(center: (locationManager.location?.coordinate)!, span: span)
-            mapView.setRegion(region, animated: true)
+            mapView.setRegion(region, animated: true) //places user location on map
+            //Since this app is being run in a simulator, the user's location will always appear in California
         }
     }
 }

@@ -11,6 +11,8 @@ import WebKit
 
 class WebViewController: UIViewController, WKUIDelegate {
     
+    /* Chapter 6 Bronze */
+    
     var webView: WKWebView! //Programmatically create web viewer
     
     override func loadView() {

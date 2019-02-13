@@ -33,11 +33,11 @@ class ConversionViewController: UIViewController, UITextFieldDelegate {
             celsiusLabel.text =
                 numberFormatter.string(from: NSNumber(value: celsiusValue.value))
         } else {
-            celsiusLabel.text = "???"
+            celsiusLabel.text = "???" //filler text if no conversion is taking place
         }
     }
     
-    //this is the function that does the conversion
+    //Helper function to do the conversion
     var celsiusValue: Measurement<UnitTemperature>? {
         if let fahrenheitValue = fahrenheitValue {
             return fahrenheitValue.converted(to: .celsius)
@@ -89,6 +89,7 @@ class ConversionViewController: UIViewController, UITextFieldDelegate {
         print("ConversionViewController loaded its view.")
         
         /* Chapter 5 Silver */
+        
         let darkColor = UIColor(red: 51/255, green: 52/255, blue: 50/255, alpha: 1.0)
         let greyColor = UIColor(red: 238/255, green: 240/255, blue: 239/255, alpha: 1.0)
         let hour = NSCalendar.current.component(.hour, from: NSDate() as Date)
@@ -102,7 +103,9 @@ class ConversionViewController: UIViewController, UITextFieldDelegate {
             self.backgroundView.backgroundColor = greyColor
         case 19...23, 0:
             self.backgroundView.backgroundColor = darkColor
-        default: self.backgroundView.backgroundColor = greyColor
+        default:
+            //This should never happen
+            self.backgroundView.backgroundColor = greyColor
         }
         
         updateCelsiusLabel() //shows default values for fahrenheit and celsius
