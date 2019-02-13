@@ -17,9 +17,9 @@ class MapViewController: UIViewController, MKMapViewDelegate {
     var geoButton: UIButton! //Button that will appear on the display
     var pinButton: UIButton! //Button that will appear on the display
     var state: Int = 0
-    var homePin: MKPointAnnotation!          //Pinned Location
-    var realHomePin: MKPointAnnotation!      //Pinned Location
-    var futureTravelPin: MKPointAnnotation!  //Pinned Location
+    var bornPin: MKPointAnnotation!                 //Pinned Location
+    var currentHomePin: MKPointAnnotation!          //Pinned Location
+    var interestingLocationPin: MKPointAnnotation!  //Pinned Location
     
     var locationManager = CLLocationManager.init()
     
@@ -77,43 +77,43 @@ class MapViewController: UIViewController, MKMapViewDelegate {
         /* Chapter 6 Gold */
         
         //Greece, NY
-        homePin = MKPointAnnotation() //Declare MKPointAnnotation object
-        homePin.title = "Born Here" //This displays as a label for the pin on the map
-        homePin.coordinate = CLLocationCoordinate2D(latitude: 43.2098, longitude: -77.6931) //places pin on map
+        bornPin = MKPointAnnotation() //Declare MKPointAnnotation object
+        bornPin.title = "Born Here" //This displays as a label for the pin on the map
+        bornPin.coordinate = CLLocationCoordinate2D(latitude: 43.2098, longitude: -77.6931) //places pin on map
         
         //Customization for the born location pin
         let bornPinView = MKPinAnnotationView()
-        bornPinView.annotation = homePin
+        bornPinView.annotation = bornPin
         bornPinView.pinTintColor = UIColor.green
         bornPinView.animatesDrop = true
         
-        mapView.addAnnotation(homePin)
+        mapView.addAnnotation(bornPin)
         
         //Cary, NC
-        realHomePin = MKPointAnnotation()
-        realHomePin.title = "Current Home"
-        realHomePin.coordinate = CLLocationCoordinate2D(latitude: 35.7915, longitude: -78.7811)
+        currentHomePin = MKPointAnnotation()
+        currentHomePin.title = "Current Home"
+        currentHomePin.coordinate = CLLocationCoordinate2D(latitude: 35.7915, longitude: -78.7811)
         
         //Customization for the current home location pin
         let currentHomePinView = MKPinAnnotationView()
-        currentHomePinView.annotation = realHomePin
+        currentHomePinView.annotation = currentHomePin
         currentHomePinView.pinTintColor = UIColor.blue
         currentHomePinView.animatesDrop = true
         
-        mapView.addAnnotation(realHomePin)
+        mapView.addAnnotation(currentHomePin)
         
         //Walt Disney World, FL
-        futureTravelPin = MKPointAnnotation()
-        futureTravelPin.title = "Interesting spot"
-        futureTravelPin.coordinate = CLLocationCoordinate2D(latitude: 28.3852, longitude: -81.5639)
+        interestingLocationPin = MKPointAnnotation()
+        interestingLocationPin.title = "Interesting spot"
+        interestingLocationPin.coordinate = CLLocationCoordinate2D(latitude: 28.3852, longitude: -81.5639)
         
         //Customization for the interesting place pin
         let interestingSpotPinView = MKPinAnnotationView()
         interestingSpotPinView.pinTintColor = UIColor.green
         interestingSpotPinView.animatesDrop = true
-        interestingSpotPinView.annotation = futureTravelPin
+        interestingSpotPinView.annotation = interestingLocationPin
         
-        mapView.addAnnotation(futureTravelPin)
+        mapView.addAnnotation(interestingLocationPin)
         
         //Properties to customize and position the pin button on the display
         pinButton = UIButton(type: .custom)
@@ -146,13 +146,13 @@ class MapViewController: UIViewController, MKMapViewDelegate {
         switch state {
         case 0:
             state += 1
-            setLocation(homePin)
+            setLocation(bornPin)
         case 1:
             state += 1
-            setLocation(realHomePin)
+            setLocation(currentHomePin)
         default:
             state = 0
-            setLocation(futureTravelPin)
+            setLocation(interestingLocationPin)
         }
     }
     
