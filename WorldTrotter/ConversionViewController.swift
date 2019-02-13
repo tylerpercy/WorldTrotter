@@ -11,6 +11,7 @@ import UIKit
 class ConversionViewController: UIViewController, UITextFieldDelegate {
     
     //format decimals in conversion
+    //This is called in the function that does the conversion
     let numberFormatter: NumberFormatter = {
         let nf = NumberFormatter()
         nf.numberStyle = .decimal
@@ -67,6 +68,7 @@ class ConversionViewController: UIViewController, UITextFieldDelegate {
         }
     }
     
+    //Helper function to update fahrenheit text field
     @IBAction func fahrenheitFieldEditingChanged(_ textField: UITextField) {
         if let text = textField.text, let value = Double(text) {
             fahrenheitValue = Measurement(value: value, unit: .fahrenheit)
@@ -91,6 +93,8 @@ class ConversionViewController: UIViewController, UITextFieldDelegate {
         let greyColor = UIColor(red: 238/255, green: 240/255, blue: 239/255, alpha: 1.0)
         let hour = NSCalendar.current.component(.hour, from: NSDate() as Date)
         
+        //coloring the background
+        //number ranges here represent time of day in hours
         switch hour {
         case 1...6:
             self.backgroundView.backgroundColor = darkColor

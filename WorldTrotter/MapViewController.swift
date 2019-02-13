@@ -11,28 +11,32 @@ import MapKit
 
 class MapViewController: UIViewController, MKMapViewDelegate {
     
+    //Initializing the buttons using their respective classes
+    //Programmatically creating the buttons allows for more customization
     var mapView: MKMapView!
-    var geoButton: UIButton!
-    var pinButton: UIButton!
+    var geoButton: UIButton! //Button that will appear on the display
+    var pinButton: UIButton! //Button that will appear on the display
     var state: Int = 0
-    var homePin: MKPointAnnotation!
-    var realHomePin: MKPointAnnotation!
-    var futureTravelPin: MKPointAnnotation!
+    var homePin: MKPointAnnotation!          //Pinned Location
+    var realHomePin: MKPointAnnotation!      //Pinned Location
+    var futureTravelPin: MKPointAnnotation!  //Pinned Location
     
     var locationManager = CLLocationManager.init()
     
     override func loadView() {
         mapView = MKMapView()
-        view = mapView
+        view = mapView //assigning the map to the actual ViewController
         
-        let segmentedControl = UISegmentedControl(items: ["Standard", "Hybrid", "Satellite"])
-        segmentedControl.backgroundColor = UIColor.white.withAlphaComponent(0.5)
+        //This block creates the 3 map types displayed at the top of the map tab
+        let segmentedControl = UISegmentedControl(items: ["Standard", "Hybrid", "Satellite"]) //Different map views
+        segmentedControl.backgroundColor = UIColor.white.withAlphaComponent(0.5) //Opacity
         segmentedControl.selectedSegmentIndex = 0
         segmentedControl.translatesAutoresizingMaskIntoConstraints = false
         segmentedControl.addTarget(self, action: #selector(MapViewController.mapTypeChanged(_:)), for: .valueChanged)
         
         view.addSubview(segmentedControl)
         
+        //constraining the map buttons to the top of the display
         let topConstraint = segmentedControl.topAnchor.constraint(equalTo: view.safeAreaLayoutGuide.topAnchor, constant: 8)
         let margins = view.layoutMarginsGuide
         let leadingConstraint = segmentedControl.leadingAnchor.constraint(equalTo: margins.leadingAnchor)
@@ -42,6 +46,7 @@ class MapViewController: UIViewController, MKMapViewDelegate {
         leadingConstraint.isActive = true
         trailingConstraint.isActive = true
         
+        //allows the app to use location services
         locationManager.requestWhenInUseAuthorization()
         
         mapView.showsUserLocation = true
@@ -50,20 +55,24 @@ class MapViewController: UIViewController, MKMapViewDelegate {
         let geoButton = UIButton(type: .custom)
         let buttonWidth = 40
         
+        //Properties to customize and position the user location button on the display
         geoButton.frame = CGRect(x: 15,y: 100,width: buttonWidth, height: buttonWidth)
-        geoButton.layer.cornerRadius = 0.5 * geoButton.bounds.size.width
+        geoButton.layer.cornerRadius = 0.5 * geoButton.bounds.size.width //Radius for corners
         geoButton.layer.borderWidth = 0.25
-        geoButton.layer.borderColor = UIColor.darkGray.cgColor
+        geoButton.layer.borderColor = UIColor.white.cgColor
         geoButton.layer.backgroundColor = UIColor.lightGray.cgColor
-        geoButton.setTitle("*", for: UIControlState())
+        geoButton.setTitle("🏠", for: UIControlState()) //This appears inside the button, I chose to use an icon
         geoButton.setTitleColor(UIColor.darkGray, for: UIControlState())
         geoButton.addTarget(self, action: #selector(MapViewController.geoButtonAction(_:)), for: .touchUpInside)
         
         view.addSubview(geoButton)
         
-        homePin = MKPointAnnotation()
+        /* Pins for Chapter 6 Gold Level */
+        
+        //Greece, NY
+        homePin = MKPointAnnotation() //Declare MKPointAnnotation object
         homePin.title = "Born Here"
-        homePin.coordinate = CLLocationCoordinate2D(latitude: 43.2098, longitude: -77.6931)
+        homePin.coordinate = CLLocationCoordinate2D(latitude: 43.2098, longitude: -77.6931) //places pin on map
         
         let homePinView = MKPinAnnotationView()
         homePinView.annotation = homePin
@@ -71,7 +80,8 @@ class MapViewController: UIViewController, MKMapViewDelegate {
         homePinView.animatesDrop = true
         
         mapView.addAnnotation(homePin)
-    
+        
+        //Cary, NC
         realHomePin = MKPointAnnotation()
         realHomePin.title = "Current Home"
         realHomePin.coordinate = CLLocationCoordinate2D(latitude: 35.7915, longitude: -78.7811)
@@ -83,6 +93,7 @@ class MapViewController: UIViewController, MKMapViewDelegate {
         
         mapView.addAnnotation(realHomePin)
     
+        //Walt Disney World, FL
         futureTravelPin = MKPointAnnotation()
         futureTravelPin.title = "Interesting spot"
         futureTravelPin.coordinate = CLLocationCoordinate2D(latitude: 28.3852, longitude: -81.5639)
@@ -94,9 +105,8 @@ class MapViewController: UIViewController, MKMapViewDelegate {
         
         mapView.addAnnotation(futureTravelPin)
         
-        
+        //Properties to customize and position the pin button on the display
         pinButton = UIButton(type: .custom)
-        
         pinButton.frame = CGRect(x: 15,y: 200,width: buttonWidth, height: buttonWidth)
         pinButton.layer.cornerRadius = 0.5 * geoButton.bounds.size.width
         pinButton.layer.borderWidth = 0.25
@@ -108,6 +118,7 @@ class MapViewController: UIViewController, MKMapViewDelegate {
         view.addSubview(pinButton)
     }
     
+    //Helper function to cycle between the 3 pinned locations
     @objc func pinButtonAction(_ sender: UIButton!) {
         switch state {
         case 0:
@@ -130,6 +141,7 @@ class MapViewController: UIViewController, MKMapViewDelegate {
         }
     }
     
+    //Helper function for user location button
     @objc func geoButtonAction(_ sender: UIButton!) {
         let span = MKCoordinateSpan.init(latitudeDelta: 0.0075, longitudeDelta: 0.0075)
         if locationManager.location != nil {
@@ -138,6 +150,7 @@ class MapViewController: UIViewController, MKMapViewDelegate {
         }
     }
     
+    //Helper function to change between map views
     @objc func mapTypeChanged(_ segControl: UISegmentedControl) {
         switch segControl.selectedSegmentIndex {
         case 0:
